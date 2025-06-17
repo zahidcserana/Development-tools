@@ -1,0 +1,29 @@
+## set up Alembic
+
+1. Install Alembic
+pip install alembic
+
+2. Initialize Alembic
+alembic init alembic
+
+3. Configure Alembic
+Edit alembic.ini:
+sqlalchemy.url = postgresql://postgres:yourpassword@db:5432/yourdb
+
+Edit alembic/env.py to include your models:
+Replace:
+from mymodel import mymodel
+With:
+from app.database import Base  # Your SQLAlchemy Base
+from app.models import user, payroll  # Import all models
+target_metadata = Base.metadata
+
+4. Initial Alembic migration
+alembic revision --autogenerate -m "Initial migration"
+alembic upgrade head
+
+5. Alter table
+alembic revision --autogenerate -m "Add is_active field to users"
+alembic upgrade head
+
+
